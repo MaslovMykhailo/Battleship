@@ -12,6 +12,8 @@ class Navy extends Component {
       for (let i = 4 ; i > 0 ; i--) {
         ships.push(new Array(5-i).fill(null).map((v, k) => {
           return {
+            x: null,
+            y: null,
             pos: 1,
             id: k+''+(5-i),
             type: i,

@@ -8,8 +8,10 @@ const shipSource = {
     return props.shipState;
   },
   endDrag(props, monitor) {
-    if (monitor.didDrop() && !props.isDropped) {
-      props.shipDroppedHandler(props.shipState);
+    if (monitor.didDrop()) {
+      if (monitor.getDropResult().successDrop && !props.shipState.isDropped) {
+        props.shipDroppedHandler(props.shipState);
+      }
     }
   }
 };
@@ -23,6 +25,12 @@ function collect(connect, monitor) {
 }
 
 class Ship extends Component{
+  shouldComponentUpdate(nextProps) {
+    return this.props.isDragging ||
+      this.props.shipState.x !== nextProps.shipState.x ||
+      this.props.shipState.y !== nextProps.shipState.y;
+  }
+  
   render() {
     const style = {
       opacity: this.props.isDragging ? 0.5 : 1,

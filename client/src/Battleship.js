@@ -45,48 +45,68 @@ class Battleship extends Component {
   }
   
   changeMatrixHandler(shipState, oldShipState) {
-     const {x, y, type, pos} = shipState;
-     const {x: oldX, y: oldY} = oldShipState;
-     
-     const changedMatrix = [];
-     for (let i = 0 ; i < 10 ; i++) {
-       changedMatrix[i] = this.state.matrix[i].slice();
-     }
+    const {x, y, type, pos} = shipState;
+    const {x: oldX, y: oldY} = oldShipState;
+  
+    const stateIsEqual = x === oldX && y === oldY;
+    
+    const changedMatrix = [];
+    for (let i = 0 ; i < 10 ; i++) {
+      changedMatrix[i] = this.state.matrix[i].slice();
+    }
+    
+    const changeElement = (x, y, action) => {
+      if (x < 0 || x > 9 || y < 0 || y > 9) return null;
+      
+      const methods = {
+        insertPoint(x, y) {
+          changedMatrix[y][x]++;
+        },
+        deletePoint(x, y) {
+          if (changedMatrix[y][x]) changedMatrix[y][x]--;
+        },
+        insertDeck(x, y) {
+          changedMatrix[y][x] = 9;
+        },
+        deleteDeck(x, y) {
+          changedMatrix[y][x] = 0;
+        }
+      };
+      
+      methods[action](x, y);
+    };
     
      for (let i = 0 ; i < type ; i++) {
-        if (pos) {
-          if (oldX + i < 10)changedMatrix[oldY][oldX+i] = 0;
-          if (oldY - 1 > -1) changedMatrix[oldY-1][oldX+i] = 0;
-          if (oldY+1 < 10 && oldX+i < 10)changedMatrix[oldY+1][oldX+i] = 0;
-          
-          if (x + i < 10)changedMatrix[y][x+i] = 1;
-          if (y - 1 > -1) changedMatrix[y-1][x+i] = 2;
-          if (y+1 < 10 && x+i < 10)changedMatrix[y+1][x+i] = 2;
-        } else {
-          if (oldY+1 < 10)changedMatrix[oldY+i][oldX] = 0;
-          if (oldX-1 > -1) changedMatrix[oldY+i][oldX-1] = 0;
-          if (oldY+1 < 10 && oldX+1 < 10)changedMatrix[oldY+i][oldX+1] = 0;
-          
-          if (y+1 < 10)changedMatrix[y+i][x] = 1;
-          if (x-1 > -1) changedMatrix[y+i][x-1] = 2;
-          if (y+1 < 10 && x+1 < 10)changedMatrix[y+i][x+1] = 2;
-        }
+       let shiftX = pos ? i : 0;
+       let shiftY = pos ? 0 : i;
+  
+       let dx = pos ? 0 : 1;
+       let dy = pos ? 1 : 0;
+       
+       if (!stateIsEqual) {
+         changeElement(oldX + shiftX, oldY + shiftY, 'deleteDeck');
+         changeElement(oldX + shiftX - dx, oldY + shiftY - dy, 'deletePoint');
+         changeElement(oldX + shiftX + dx, oldY + shiftY + dy, 'deletePoint');
+       }
+       changeElement(x+shiftX, y+shiftY, 'insertDeck');
+       changeElement(x+shiftX-dx, y+shiftY-dy, 'insertPoint');
+       changeElement(x+shiftX+dx, y+shiftY+dy, 'insertPoint');
      }
      
      for (let i = 0 ; i < 3 ; i++) {
-       if (pos) {
-         if (oldY-1+i>-1 && oldX-1>-1 && oldY-1+i<10) changedMatrix[oldY-1+i][oldX-1] = 0;
-         if (oldY-1+i>-1 && oldY-1+i<10 && oldX+type<10) changedMatrix[oldY-1+i][oldX+type] = 0;
-         
-         if (y-1+i>-1 && x-1>-1 && y-1+i<10) changedMatrix[y-1+i][x-1] = 2;
-         if (y-1+i>-1 && y-1+i<10 && x+type<10) changedMatrix[y-1+i][x+type] = 2;
-       } else {
-         if (oldY-1>-1 && oldX+i-1>-1 && oldX+1+i<10) changedMatrix[oldY-1][oldX+i-1] = 0;
-         if (oldX+i-1>-1 && oldX+i-1<10 && oldY+type<10)changedMatrix[oldY+type][oldX+i-1] = 0;
-         
-         if (y-1>-1 && x+i-1>-1 && x+1+i<10) changedMatrix[y-1][x+i-1] = 2;
-         if (x+i-1>-1 && x+i-1<10 && y+type<10)changedMatrix[y+type][x+i-1] = 2;
+       let shiftX = pos ? -1 : i-1;
+       let shiftY = pos ? i-1 : -1;
+       
+       let dx = pos ? type : i-1;
+       let dy = pos ? i-1 : type;
+       
+       if (!stateIsEqual) {
+         changeElement(oldX + shiftX, oldY + shiftY, 'deletePoint');
+         changeElement(oldX + dx, oldY + dy, 'deletePoint');
        }
+       
+       changeElement(x+shiftX, y+shiftY, 'insertPoint');
+       changeElement(x+dx, y+dy, 'insertPoint');
      }
      
      console.log(changedMatrix);

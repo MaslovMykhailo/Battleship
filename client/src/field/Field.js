@@ -5,32 +5,25 @@ import Ship from '../ship/Ship';
 
 import {DropTarget} from 'react-dnd';
 
-import { getCoord, getCoordInPx, canMoveShip } from './findCoordFunc';
-
-const getCurrentDeck = (monitor) => {
-  const { x: clientX } = monitor.getInitialClientOffset();
-  const { x: sourceX } = monitor.getInitialSourceClientOffset();
-  
-  return Math.floor((clientX - sourceX) / 40);
-};
+import { getCoord, getCoordInPx, canMoveShip, getCurrentDeck } from './findCoordFunc';
 
 const fieldTarget = {
   drop(props, monitor, component) {
-    
+  
     const {type, pos, id, isDropped} = monitor.getItem();
     const curDeck = getCurrentDeck(monitor);
     const {x, y} = getCoord(monitor, component, curDeck, pos);
   
     component.changeHelperState({x: 0, y: 0, w: 0, pos: 0, vis: false});
-    
-    
-    console.log(x + ' - ' + y);
-    
-    const { resXpx, resYpx } = getCoordInPx(component, x, y);
-    
+  
+    // console.log(x + ' - ' + y);
+  
+    const {resXpx, resYpx} = getCoordInPx(component, x, y);
+  
     if (canMoveShip({x, y, curDeck, type, pos}, props.matrix)) {
       component.dropShipHandler({x, y, resXpx, resYpx, type, id, pos, isDropped});
-    }
+      return { successDrop: true };
+    } else return { successDrop: false };
   },
   hover(props, monitor, component) {
     const curDeck = getCurrentDeck(monitor);
@@ -51,7 +44,7 @@ const fieldTarget = {
     } else {
       component.changeHelperState({x: 0, y: 0, w: 0, pos: 0, vis: false});
     }
-  },
+  }
 };
 
 function collect(connect, monitor) {
@@ -81,6 +74,7 @@ class Field extends Component {
     };
     
     this.dropShipHandler = this.dropShipHandler.bind(this);
+    this.changeHelperState = this.changeHelperState.bind(this);
   }
   
   componentDidMount() {
@@ -95,18 +89,16 @@ class Field extends Component {
     const {x, y, w, pos, vis, color} = newState;
     this.setState({
       helper: {
-        x: x,
-        y: y,
+        x, y, vis,
         width: pos ? w : 39,
         height: pos ? 39 : w,
-        vis,
         color: color
       }
     });
   }
   
   dropShipHandler(shipState) {
-    const {x, y, resXpx, resYpx, type, pos, id, isDropped} = shipState;
+    const {id, isDropped} = shipState;
     const oldShips = this.state.ships;
     const newShips = oldShips.slice();
     
@@ -123,9 +115,7 @@ class Field extends Component {
       this.props.changeMatrixHandler(shipState, shipState);
     }
     
-    newShips.push({
-      x, y, resXpx, resYpx, type, id, pos
-    });
+    newShips.push(Object.assign(shipState, {isDropped: true}));
     
     this.setState({
       ships: newShips
@@ -157,7 +147,7 @@ class Field extends Component {
     };
     
     return this.props.connectDropTarget(
-      <div style={{padding: '1%'}}>
+      <div style={{margin: '1%'}}>
         <div style={helperStyle} />
         <Table setTableNode={(node) => {this.field = node}}/>
         {this.state.ships.map((s, i) => {
