@@ -1,0 +1,20 @@
+header {
+    top: 0;
+    left: 0;
+    min-width: 980px;
+    max-width: 1500px;
+    width: 99%;
+    font-size: 5vw;
+    padding: 0.5%;
+    background: #1a237e;
+    color: white;
+    font-family: Roboto;
+    cursor: default;
+}
+
+.anchor {
+    position: absolute;
+    text-align: center;
+    right: 0.5%;
+    width: 20%;
+}

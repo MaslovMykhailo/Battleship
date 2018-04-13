@@ -1,0 +1,7 @@
+.deck {
+    width: 36px;
+    height: 36px;
+    background: blue;
+    margin-right: 4px;
+    display: inline-block;
+}

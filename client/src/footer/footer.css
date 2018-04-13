@@ -1,0 +1,30 @@
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 99%;
+    min-width: 980px;
+    max-width: 1500px;
+    padding: 0.5%;
+    font-size: 1.7vw;
+    /*min-font-size: 14px;*/
+    background: #1a237e;
+    color: white;
+    font-family: Roboto;
+    cursor: default;
+}
+
+.git {
+    position: absolute;
+    right: 3%;
+    font-size: 1.7vw;
+    color: white;
+    font-family: Roboto;
+    text-decoration: none;
+}
+
+.gitSVG {
+    position: absolute;
+    text-align: center;
+    width: 2%;
+    right: 0.5%;
+}
