@@ -9,15 +9,11 @@ import { getCoord, getCoordInPx, canMoveShip, getCurrentDeck } from './findCoord
 
 const fieldTarget = {
   drop(props, monitor, component) {
+    component.changeHelperState({x: 0, y: 0, w: 0, pos: 0, vis: false});
   
     const {type, pos, id, isDropped} = monitor.getItem();
     const curDeck = getCurrentDeck(monitor);
     const {x, y} = getCoord(monitor, component, curDeck, pos);
-  
-    component.changeHelperState({x: 0, y: 0, w: 0, pos: 0, vis: false});
-  
-    // console.log(x + ' - ' + y);
-  
     const {resXpx, resYpx} = getCoordInPx(component, x, y);
   
     if (canMoveShip({x, y, curDeck, type, pos}, props.matrix)) {
@@ -109,12 +105,10 @@ class Field extends Component {
           delShipIndex = i; break;
         }
       }
-      this.props.changeMatrixHandler(shipState, oldShips[delShipIndex]);
       newShips.splice(delShipIndex, 1);
-    } else {
-      this.props.changeMatrixHandler(shipState, shipState);
     }
-    
+    this.props.changeMatrixHandler(shipState, 'add');
+  
     newShips.push(Object.assign(shipState, {isDropped: true}));
     
     this.setState({
@@ -156,6 +150,7 @@ class Field extends Component {
               key={i}
               st={createShipStyle(s)}
               shipState={s}
+              changeMatrixHandler={this.props.changeMatrixHandler}
             />
           )
         })}

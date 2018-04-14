@@ -5,12 +5,20 @@ import Deck from './Deck.js';
 
 const shipSource = {
   beginDrag(props, monitor) {
-    return props.shipState;
+    const shipState = props.shipState;
+    
+    if (shipState.isDropped) {
+      props.changeMatrixHandler(shipState, 'del');
+    }
+    
+    return shipState;
   },
   endDrag(props, monitor) {
     if (monitor.didDrop()) {
-      if (monitor.getDropResult().successDrop && !props.shipState.isDropped) {
-        props.shipDroppedHandler(props.shipState);
+      if (monitor.getDropResult().successDrop) {
+        if (!props.shipState.isDropped) props.shipDroppedHandler(props.shipState);
+      } else {
+        if (props.shipState.isDropped) props.changeMatrixHandler(props.shipState, 'add');
       }
     }
   }

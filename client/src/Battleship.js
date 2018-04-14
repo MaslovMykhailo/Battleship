@@ -44,36 +44,33 @@ class Battleship extends Component {
     this.changeMatrixHandler = this.changeMatrixHandler.bind(this);
   }
   
-  changeMatrixHandler(shipState, oldShipState) {
+  changeMatrixHandler(shipState, action) {
     const {x, y, type, pos} = shipState;
-    const {x: oldX, y: oldY} = oldShipState;
   
-    const stateIsEqual = x === oldX && y === oldY;
-    
     const changedMatrix = [];
     for (let i = 0 ; i < 10 ; i++) {
       changedMatrix[i] = this.state.matrix[i].slice();
     }
     
-    const changeElement = (x, y, action) => {
+    const changeElement = (x, y, whatChange) => {
       if (x < 0 || x > 9 || y < 0 || y > 9) return null;
       
       const methods = {
-        insertPoint(x, y) {
+        addPoint(x, y) {
           changedMatrix[y][x]++;
         },
-        deletePoint(x, y) {
+        delPoint(x, y) {
           if (changedMatrix[y][x]) changedMatrix[y][x]--;
         },
-        insertDeck(x, y) {
+        addDeck(x, y) {
           changedMatrix[y][x] = 9;
         },
-        deleteDeck(x, y) {
+        delDeck(x, y) {
           changedMatrix[y][x] = 0;
         }
       };
       
-      methods[action](x, y);
+      methods[action + whatChange](x, y);
     };
     
      for (let i = 0 ; i < type ; i++) {
@@ -83,14 +80,9 @@ class Battleship extends Component {
        let dx = pos ? 0 : 1;
        let dy = pos ? 1 : 0;
        
-       if (!stateIsEqual) {
-         changeElement(oldX + shiftX, oldY + shiftY, 'deleteDeck');
-         changeElement(oldX + shiftX - dx, oldY + shiftY - dy, 'deletePoint');
-         changeElement(oldX + shiftX + dx, oldY + shiftY + dy, 'deletePoint');
-       }
-       changeElement(x+shiftX, y+shiftY, 'insertDeck');
-       changeElement(x+shiftX-dx, y+shiftY-dy, 'insertPoint');
-       changeElement(x+shiftX+dx, y+shiftY+dy, 'insertPoint');
+       changeElement(x+shiftX, y+shiftY, 'Deck');
+       changeElement(x+shiftX-dx, y+shiftY-dy, 'Point');
+       changeElement(x+shiftX+dx, y+shiftY+dy, 'Point');
      }
      
      for (let i = 0 ; i < 3 ; i++) {
@@ -100,13 +92,8 @@ class Battleship extends Component {
        let dx = pos ? type : i-1;
        let dy = pos ? i-1 : type;
        
-       if (!stateIsEqual) {
-         changeElement(oldX + shiftX, oldY + shiftY, 'deletePoint');
-         changeElement(oldX + dx, oldY + dy, 'deletePoint');
-       }
-       
-       changeElement(x+shiftX, y+shiftY, 'insertPoint');
-       changeElement(x+dx, y+dy, 'insertPoint');
+       changeElement(x+shiftX, y+shiftY, 'Point');
+       changeElement(x+dx, y+dy, 'Point');
      }
      
      console.log(changedMatrix);
