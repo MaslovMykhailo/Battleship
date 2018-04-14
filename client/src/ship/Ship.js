@@ -14,12 +14,17 @@ const shipSource = {
     return shipState;
   },
   endDrag(props, monitor) {
+    const { shipState, changeMatrixHandler, shipDroppedHandler } = props;
+    const { isDropped } = shipState;
+    
     if (monitor.didDrop()) {
       if (monitor.getDropResult().successDrop) {
-        if (!props.shipState.isDropped) props.shipDroppedHandler(props.shipState);
+        if (!isDropped) shipDroppedHandler(shipState);
       } else {
-        if (props.shipState.isDropped) props.changeMatrixHandler(props.shipState, 'add');
+        if (isDropped) changeMatrixHandler(shipState, 'add');
       }
+    } else {
+      if (isDropped) changeMatrixHandler(shipState, 'add');
     }
   }
 };
