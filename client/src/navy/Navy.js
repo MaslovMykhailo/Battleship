@@ -14,7 +14,7 @@ class Navy extends Component {
           return {
             x: null,
             y: null,
-            pos: 1,
+            pos: true,
             id: k+''+(5-i),
             type: i,
             isDropped: false

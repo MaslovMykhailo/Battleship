@@ -5,7 +5,8 @@ import Ship from '../ship/Ship';
 
 import {DropTarget} from 'react-dnd';
 
-import { getCoord, getCoordInPx, canMoveShip, getCurrentDeck } from './findCoordFunc';
+import { getCoord, getCoordInPx, getCurrentDeck } from '../helpFunctions/findCoordFunc';
+import { canMoveShip, canMoveHelper } from '../helpFunctions/canMove';
 
 const fieldTarget = {
   drop(props, monitor, component) {
@@ -27,7 +28,7 @@ const fieldTarget = {
     const {x, y} = getCoord(monitor, component, curDeck, pos);
     const {resXpx, resYpx} = getCoordInPx(component, x, y);
     
-    if (x > -1 && x + type - 1 < 10 && y > -1 && y < 10) {
+    if (canMoveHelper({x, y, type, pos})) {
       const newState = {
         x: resXpx,
         y: resYpx,
@@ -85,10 +86,9 @@ class Field extends Component {
     const {x, y, w, pos, vis, color} = newState;
     this.setState({
       helper: {
-        x, y, vis,
+        x, y, vis, color,
         width: pos ? w : 39,
-        height: pos ? 39 : w,
-        color: color
+        height: pos ? 39 : w
       }
     });
   }
@@ -136,7 +136,6 @@ class Field extends Component {
         position: 'absolute',
         left: shipState.resXpx,
         top: shipState.resYpx,
-        width: shipState.type * 40
       }
     };
     
@@ -151,6 +150,8 @@ class Field extends Component {
               st={createShipStyle(s)}
               shipState={s}
               changeMatrixHandler={this.props.changeMatrixHandler}
+              matrix={this.props.matrix}
+              dropShipHandler={this.dropShipHandler}
             />
           )
         })}
