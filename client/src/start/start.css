@@ -1,14 +1,22 @@
 .startContent {
-    position: absolute;
-    width: 100%;
-    min-width: 980px;
-    max-width: 1500px;
+    flex: 1 0 auto;
+    /*text-align: center;*/
+    background: url(start.jpg) center center no-repeat;
+    background-size: cover;
+    /*position: absolute;*/
+    /*width: 100%;*/
+    /*overflow: hidden;*/
+    /*min-width: 980px;*/
+    /*max-width: 1500px;*/
 }
 
 .startPicture {
-    width: 100%;
-    min-width: 980px;
-    max-width: 1500px;
+    height: 100%;
+    overflow: hidden;
+
+    /*height: 100%;*/
+    /*min-width: 980px;*/
+    /*max-width: 1500px;*/
 }
 
 .startButton {
