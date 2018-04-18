@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import './table.css';
 
 class Table extends Component {
   
@@ -7,19 +8,24 @@ class Table extends Component {
   }
   
   render() {
-    const style = {
-      position: 'absolute',
-      borderSpacing: '0 0',
-      width: '400px',
-      height: '400px',
-      margin: '1% 3%',
-      padding: 0,
-      border: '1px solid black'
-    };
+    // const style = {
+    //   position: 'relative',
+    //   float: 'left',
+    //   borderSpacing: '0 0',
+    //   width: '402px ',
+    //   height: '402px',
+    //   margin: '1% 3%',
+    //   padding: 0,
+    //   border: '1px solid black'
+    // };
+    
+    const { side } = this.props;
     
     const createTr = (j) => {
       return new Array(10).fill(0).map((td, i) => (
-        <td key={i + '' + j} style={{border: '1px solid black'}}/>
+        <td key={i + '' + j} style={{border: '1px solid black', width: side, height: side}}>
+          {/*<div className={'content'} />*/}
+        </td>
       ));
     };
   
@@ -28,7 +34,7 @@ class Table extends Component {
     ));
   
     return(
-      <table style={style} ref={this.props.setTableNode}>
+      <table>
         <tbody>
         {tr}
         </tbody>

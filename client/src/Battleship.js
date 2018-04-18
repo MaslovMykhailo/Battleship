@@ -52,8 +52,7 @@ class Battleship extends Component {
     }
     
     changeMatrix(shipState, changedMatrix, action);
-    console.log(changedMatrix);
-     
+    
     this.setState({
       matrix: changedMatrix
     });
@@ -67,7 +66,7 @@ class Battleship extends Component {
   
   render() {
     return (
-      <div>
+      <div className={'battleship'}>
         <Header />
         <Application curStatus={this.state.status}
                      changeStatus={this.changeStatus}

@@ -12,29 +12,29 @@ const fieldTarget = {
   drop(props, monitor, component) {
     component.changeHelperState({x: 0, y: 0, w: 0, pos: 0, vis: false});
   
+    const { side, width } = props;
     const {type, pos, id, isDropped} = monitor.getItem();
-    const curDeck = getCurrentDeck(monitor);
-    const {x, y} = getCoord(monitor, component, curDeck, pos);
-    const {resXpx, resYpx} = getCoordInPx(component, x, y);
+    const curDeck = getCurrentDeck(monitor, pos, side);
+    const {x, y} = getCoord(monitor, props, curDeck, pos);
+    const {resXpx, resYpx} = getCoordInPx(side, width, x, y);
   
     if (canMoveShip({x, y, curDeck, type, pos}, props.matrix)) {
-      component.dropShipHandler({x, y, resXpx, resYpx, type, id, pos, isDropped});
+      component.dropShipHandler({x, y, resXpx, resYpx, type, id, pos, side, isDropped});
       return { successDrop: true };
     } else return { successDrop: false };
   },
   hover(props, monitor, component) {
-    const curDeck = getCurrentDeck(monitor);
-    const {type, pos} = monitor.getItem();
-    const {x, y} = getCoord(monitor, component, curDeck, pos);
-    const {resXpx, resYpx} = getCoordInPx(component, x, y);
     
+    const { side, width } = props;
+    const {type, pos} = monitor.getItem();
+    const curDeck = getCurrentDeck(monitor, pos, side);
+    const {x, y} = getCoord(monitor, props, curDeck, pos);
+    const {resXpx, resYpx} = getCoordInPx(side, width ,x, y);
+  
     if (canMoveHelper({x, y, type, pos})) {
       const newState = {
-        x: resXpx,
-        y: resYpx,
-        w: 40*type,
-        pos,
-        vis: true,
+        x: resXpx, y: resYpx, side,
+        w: (side+2)*type, vis: true, pos,
         color: canMoveShip({x, y, curDeck, type, pos}, props.matrix) ? 'green' : 'red'
       };
       component.changeHelperState(newState);
@@ -55,11 +55,7 @@ function collect(connect, monitor) {
 class Field extends Component {
   constructor(props) {
     super(props);
-    this.field = null;
     this.state = {
-      x: null,
-      y: null,
-      side: null,
       helper: {
         x: 0,
         y: 0,
@@ -74,21 +70,15 @@ class Field extends Component {
     this.changeHelperState = this.changeHelperState.bind(this);
   }
   
-  componentDidMount() {
-    this.setState({
-      x: this.field.getBoundingClientRect().left,
-      y: this.field.getBoundingClientRect().top,
-      side: this.field.offsetWidth/10
-    });
-  }
-  
   changeHelperState(newState) {
     const {x, y, w, pos, vis, color} = newState;
+    const { side } = this.props;
+    
     this.setState({
       helper: {
         x, y, vis, color,
-        width: pos ? w : 39,
-        height: pos ? 39 : w
+        width: pos ? w : side+2,
+        height: pos ? side+2 : w
       }
     });
   }
@@ -117,7 +107,7 @@ class Field extends Component {
   }
   
   render() {
-    const {width, height, x, y, vis, color} = this.state.helper;
+    const { width, height, x, y, vis, color } = this.state.helper;
     
     const helperStyle = {
       position: 'absolute',
@@ -134,15 +124,15 @@ class Field extends Component {
     const createShipStyle = (shipState) => {
       return {
         position: 'absolute',
-        left: shipState.resXpx,
-        top: shipState.resYpx,
+        left: shipState.resXpx+2,
+        top: shipState.resYpx+2,
       }
     };
     
     return this.props.connectDropTarget(
-      <div style={{margin: '1%'}}>
+      <div style={{paddingLeft: '2%', paddingTop:'2%', width: '45%', position: 'relative', float:'left'}}>
         <div style={helperStyle} />
-        <Table setTableNode={(node) => {this.field = node}}/>
+        <Table side={this.props.side}/>
         {this.state.ships.map((s, i) => {
           return (
             <Ship

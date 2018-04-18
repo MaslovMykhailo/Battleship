@@ -1,27 +1,28 @@
-export function getCoord(monitor, component, curDeck, pos) {
+export function getCoord(monitor, props, curDeck, pos) {
   const {x: clientX, y: clientY} = monitor.getClientOffset();
-  const {x: stateX, y: stateY, side} = component.state;
+  const {x: stateX, y: stateY, side} = props;
   
-  const realX = Math.floor((clientX - stateX)/side);
-  const realY = Math.floor((clientY - stateY)/side);
-  
+  const realX = Math.floor((clientX - stateX )/(side+2));
+  const realY = Math.floor((clientY - stateY )/(side+2));
+
   const x = pos ? realX - curDeck : realX;
   const y = pos ? realY : realY - curDeck;
   
   return {x, y};
 }
 
-export function getCoordInPx(component, resX, resY) {
-  const {x: stateX, y: stateY, side} = component.state;
+export function getCoordInPx(side, width, resX, resY) {
+  let d = side > 45 ? 2 : 1;
   return {
-    resXpx: stateX + resX * side,
-    resYpx: stateY + resY * side
+    resXpx: Math.floor(width*0.02 + resX * (side+2)) + d,
+    resYpx: Math.floor(width*0.02 + resY * (side+2)) + d
   }
 }
 
-export function getCurrentDeck(monitor) {
-  const { x: clientX } = monitor.getInitialClientOffset();
-  const { x: sourceX } = monitor.getInitialSourceClientOffset();
-  
-  return Math.floor((clientX - sourceX) / 40);
+export function getCurrentDeck(monitor, pos, side) {
+  const { x: clientX, y: clientY } = monitor.getInitialClientOffset();
+  const { x: sourceX, y: sourceY } = monitor.getInitialSourceClientOffset();
+
+  return pos ? Math.floor((clientX - sourceX) / (side+2)) :
+               Math.floor((clientY - sourceY) / (side+2));
 }

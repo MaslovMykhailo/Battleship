@@ -33,7 +33,7 @@ const shipSource = {
 function collect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
-    // connectDragPreview: connect.dragPreview(),
+    connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging(),
   }
 }
@@ -81,16 +81,14 @@ class Ship extends Component{
   render() {
     const style = {
       opacity: this.props.isDragging ? 0.5 : 1,
-      padding: 0,
-      margin: 0,
     };
     
-    const {type, pos} = this.props.shipState;
+    const {type, pos, side} = this.props.shipState;
     
     return this.props.connectDragSource(
       <div style={Object.assign(style, this.props.st)} onClick={this.rotateHandler}>
         {new Array(type).fill(null).map((v, i) =>
-          <Deck key={i} pos={pos} />
+          <Deck key={i} pos={pos} side={side}/>
         )}
       </div>
     )

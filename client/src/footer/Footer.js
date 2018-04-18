@@ -7,7 +7,7 @@ import github from './github.svg';
 const Footer = () => {
   return (
     <footer>
-      Created by Michail Maslov
+      Created by Michael Maslov
       <a className={'git'} href={'https://github.com/maslovmichail20/Battleship'}>github</a>
       <a href={'https://github.com/maslovmichail20/Battleship'}>
         <img className={'gitSVG'} src={github} alt={'github'}/>

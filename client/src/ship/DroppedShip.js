@@ -3,18 +3,18 @@ import React from 'react';
 import Deck from './Deck';
 
 const DroppedShip = (props) => {
+  const {type, pos, side} = props.shipState;
+  
   const style = {
     opacity: 0.5,
     padding: 0,
     margin: 0,
   };
   
-  const {type, pos} = props.shipState;
-  
   return (
     <div style={style}>
       {new Array(type).fill(null).map((v, i) =>
-        <Deck key={i} pos={pos} />
+        <Deck key={i} pos={pos} side={side}/>
       )}
     </div>
   )

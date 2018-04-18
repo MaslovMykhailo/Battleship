@@ -17,6 +17,7 @@ class Navy extends Component {
             pos: true,
             id: k+''+(5-i),
             type: i,
+            side: this.props.side,
             isDropped: false
           }
         }));
@@ -66,7 +67,7 @@ class Navy extends Component {
     const shipsRender = this.state.ships.map((v, i) => {
       return (
         <div key={i-10}>
-          <div key={i+10}>
+          <div key={i+10} style={{marginBottom: '4px'}}>
           {v.map(s => {
             return this.chooseShip(s);
           })}
