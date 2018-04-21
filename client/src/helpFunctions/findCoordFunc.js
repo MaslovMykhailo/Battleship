@@ -14,8 +14,8 @@ export function getCoord(monitor, props, curDeck, pos) {
 export function getCoordInPx(side, width, resX, resY) {
   let d = side > 45 ? 2 : 1;
   return {
-    resXpx: Math.floor(width*0.02 + resX * (side+2)) + d,
-    resYpx: Math.floor(width*0.02 + resY * (side+2)) + d
+    resXpx: Math.floor(width*0.02 + resX * (side+2)) + d + side + 2,
+    resYpx: Math.floor(width*0.02 + resY * (side+2)) + d + side + 2
   }
 }
 

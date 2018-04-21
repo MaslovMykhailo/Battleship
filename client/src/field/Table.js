@@ -8,28 +8,29 @@ class Table extends Component {
   }
   
   render() {
-    // const style = {
-    //   position: 'relative',
-    //   float: 'left',
-    //   borderSpacing: '0 0',
-    //   width: '402px ',
-    //   height: '402px',
-    //   margin: '1% 3%',
-    //   padding: 0,
-    //   border: '1px solid black'
-    // };
-    
     const { side } = this.props;
     
+    const getData = (i, j) => {
+      if (!i) {
+        return j ? <span>{j}</span> : null;
+      }
+      if (!j) {
+        return i ? <span>{String.fromCharCode(64+i)}</span> : null;
+      }
+      return null;
+    };
+    
     const createTr = (j) => {
-      return new Array(10).fill(0).map((td, i) => (
-        <td key={i + '' + j} style={{border: '1px solid black', width: side, height: side}}>
-          {/*<div className={'content'} />*/}
+      return new Array(11).fill(0).map((td, i) => {
+        let className = !i || !j ? 'label' : '';
+        return (
+        <td className={className} key={i + '' + j} style={{width: side, height: side}}>
+          {getData(i, j)}
         </td>
-      ));
+      )});
     };
   
-    const tr = new Array(10).fill(0).map((tr, i) => (
+    const tr = new Array(11).fill(0).map((tr, i) => (
       <tr key={i}>{createTr(i)}</tr>
     ));
   

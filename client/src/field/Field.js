@@ -132,7 +132,7 @@ class Field extends Component {
     };
     
     return this.props.connectDropTarget(
-      <div style={{paddingLeft: '2%', paddingTop:'2%', width: '40%', position: 'relative', float:'left'}}>
+      <div style={{paddingLeft: '2%', paddingTop:'2%', width: '48%', position: 'relative', float:'left'}}>
         <div style={helperStyle} />
         <Table side={this.props.side}/>
         {this.state.ships.map((s, i) => {

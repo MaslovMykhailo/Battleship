@@ -1,9 +1,8 @@
 .navy {
-    padding: 2%;
+    padding-top: 5.2%;
     display: block;
     position: relative;
-    float: right;
-    right: 30%;
+    float: left;
 }
 
 .navy > div > div {

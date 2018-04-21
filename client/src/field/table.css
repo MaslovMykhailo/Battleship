@@ -1,4 +1,17 @@
 table {
     border-spacing: 0;
     border: 1px solid black;
+
+}
+
+td {
+    border: 1px solid black;
+}
+
+.label {
+    color: blue;
+    text-align: center;
+    font-size: 2vw;
+    font-family: Roboto;
+    cursor: default;
 }
