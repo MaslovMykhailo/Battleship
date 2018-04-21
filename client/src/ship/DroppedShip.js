@@ -8,7 +8,7 @@ const DroppedShip = (props) => {
   const style = {
     opacity: 0.5,
     padding: 0,
-    margin: 0,
+    marginBottom: 1
   };
   
   return (

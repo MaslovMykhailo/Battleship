@@ -3,6 +3,7 @@ import './dispose.css';
 
 import Field from '../field/Field.js';
 import Navy from '../navy/Navy.js';
+import ShipDragLayer from '../ship/ShipDragLayer'
 
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
@@ -20,7 +21,7 @@ class Dispose extends Component {
   }
   
   componentDidMount() {
-    let side = Math.floor(this.node.offsetWidth*0.04);
+    let side = Math.floor(this.node.offsetWidth*0.035);
     side = side % 2 ? side + 1 : side;
     this.setState({
       x: this.node.getBoundingClientRect().left + this.node.offsetWidth*0.02,
@@ -45,6 +46,7 @@ class Dispose extends Component {
     return (
       <div className={'dispose'} ref={(node)=>{this.node = node}}>
         {field} {navy}
+        {/*<ShipDragLayer />*/}
       </div>
     )
   }

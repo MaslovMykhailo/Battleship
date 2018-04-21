@@ -107,6 +107,7 @@ class Field extends Component {
   }
   
   render() {
+    // console.log('a');
     const { width, height, x, y, vis, color } = this.state.helper;
     
     const helperStyle = {
@@ -126,11 +127,12 @@ class Field extends Component {
         position: 'absolute',
         left: shipState.resXpx+2,
         top: shipState.resYpx+2,
+        display: shipState.pos ? 'flex' : 'block'
       }
     };
     
     return this.props.connectDropTarget(
-      <div style={{paddingLeft: '2%', paddingTop:'2%', width: '45%', position: 'relative', float:'left'}}>
+      <div style={{paddingLeft: '2%', paddingTop:'2%', width: '40%', position: 'relative', float:'left'}}>
         <div style={helperStyle} />
         <Table side={this.props.side}/>
         {this.state.ships.map((s, i) => {

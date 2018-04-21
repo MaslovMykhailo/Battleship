@@ -4,6 +4,7 @@ import { DragSource } from 'react-dnd';
 import Deck from './Deck.js';
 import { canMoveShip } from '../helpFunctions/canMove';
 import { changeMatrix } from '../helpFunctions/changeMatrix';
+// import { getEmptyImage } from 'react-dnd-html5-backend'
 
 const shipSource = {
   beginDrag(props, monitor) {
@@ -45,6 +46,12 @@ class Ship extends Component{
     this.rotateHandler = this.rotateHandler.bind(this);
   }
   
+  // componentDidMount() {
+  //   this.props.connectDragPreview(getEmptyImage(), {
+  //     captureDraggingState: true,
+  //   })
+  // }
+  
   shouldComponentUpdate(nextProps) {
     return this.props.isDragging ||
       this.props.shipState.x !== nextProps.shipState.x ||
@@ -81,6 +88,7 @@ class Ship extends Component{
   render() {
     const style = {
       opacity: this.props.isDragging ? 0.5 : 1,
+      marginBottom: 1,
     };
     
     const {type, pos, side} = this.props.shipState;
