@@ -131,22 +131,24 @@ class Field extends Component {
       }
     };
     
+    const ships = this.state.ships.map((s, i) => {
+      return (
+        <Ship
+          key={i}
+          st={createShipStyle(s)}
+          shipState={s}
+          changeMatrixHandler={this.props.changeMatrixHandler}
+          matrix={this.props.matrix}
+          dropShipHandler={this.dropShipHandler}
+        />
+      )
+    });
+    
     return this.props.connectDropTarget(
-      <div style={{paddingLeft: '2%', paddingTop:'2%', width: '48%', position: 'relative', float:'left'}}>
+      <div style={{padding: '2% 2% 1%', width: '46%', position: 'relative', float:'left'}}>
         <div style={helperStyle} />
-        <Table side={this.props.side}/>
-        {this.state.ships.map((s, i) => {
-          return (
-            <Ship
-              key={i}
-              st={createShipStyle(s)}
-              shipState={s}
-              changeMatrixHandler={this.props.changeMatrixHandler}
-              matrix={this.props.matrix}
-              dropShipHandler={this.dropShipHandler}
-            />
-          )
-        })}
+        <Table side={this.props.side} matrix={this.props.waiting ? this.props.matrix : undefined}/>
+        {!this.props.waiting ? ships : null}
       </div>
     )
   }

@@ -3,19 +3,24 @@ import './table.css';
 
 class Table extends Component {
   
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(nextProps) {
+    return !!nextProps.matrix;
   }
   
   render() {
-    const { side } = this.props;
+    const { side, matrix } = this.props;
     
-    const getData = (i, j) => {
+    const getData = (i, j, matrix) => {
       if (!i) {
         return j ? <span>{j}</span> : null;
       }
       if (!j) {
         return i ? <span>{String.fromCharCode(64+i)}</span> : null;
+      }
+      if (matrix) {
+        return matrix[j-1][i-1] ?
+          <div style={{width: side-2, height: side-2, backgroundColor: 'blue', marginLeft:1}}/> :
+          null;
       }
       return null;
     };
@@ -25,7 +30,7 @@ class Table extends Component {
         let className = !i || !j ? 'label' : '';
         return (
         <td className={className} key={i + '' + j} style={{width: side, height: side}}>
-          {getData(i, j)}
+          {getData(i, j, matrix)}
         </td>
       )});
     };

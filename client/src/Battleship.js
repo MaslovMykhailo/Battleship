@@ -7,7 +7,7 @@ import Footer from './footer/Footer.js';
 import Start from './start/Start.js';
 import Dispose from './dispose/Dispose.js';
 
-import { changeMatrix } from './helpFunctions/changeMatrix';
+import { changeMatrix, normalizeMatrix } from './helpFunctions/changeMatrix';
 
 const APP_STATUS = {
   start: 1,
@@ -28,6 +28,7 @@ const Application = (props) => {
       return (
         <Dispose matrix={props.matrix}
                  changeMatrixHandler={props.changeMatrixHandler}
+                 normalizeMatrixHandler={props.normalizeMatrixHandler}
         />
       )
     }
@@ -43,6 +44,7 @@ class Battleship extends Component {
     };
     this.changeStatus = this.changeStatus.bind(this);
     this.changeMatrixHandler = this.changeMatrixHandler.bind(this);
+    this.normalizeMatrixHandler = this.normalizeMatrixHandler.bind(this);
   }
   
   changeMatrixHandler(shipState, action) {
@@ -53,6 +55,14 @@ class Battleship extends Component {
     
     changeMatrix(shipState, changedMatrix, action);
     
+    this.setState({
+      matrix: changedMatrix
+    });
+  }
+  
+  normalizeMatrixHandler() {
+    const changedMatrix = normalizeMatrix(this.state.matrix);
+  
     this.setState({
       matrix: changedMatrix
     });
@@ -71,6 +81,7 @@ class Battleship extends Component {
         <Application curStatus={this.state.status}
                      changeStatus={this.changeStatus}
                      changeMatrixHandler={this.changeMatrixHandler}
+                     normalizeMatrixHandler={this.normalizeMatrixHandler}
                      matrix={this.state.matrix}
         />
         <Footer />

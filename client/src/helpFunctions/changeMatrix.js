@@ -1,4 +1,4 @@
-export function changeMatrix(shipState ,matrix, action) {
+export function changeMatrix(shipState, matrix, action) {
   const {x, y, type, pos} = shipState;
   
   const changeElement = (x, y, whatChange) => {
@@ -42,4 +42,8 @@ export function changeMatrix(shipState ,matrix, action) {
     changeElement(x+shiftX, y+shiftY, 'Point');
     changeElement(x+dx, y+dy, 'Point');
   }
+}
+
+export function normalizeMatrix(matrix) {
+  return matrix.map(row => row.map(v => v === 9 ? 1 : 0));
 }

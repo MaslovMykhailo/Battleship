@@ -27,6 +27,7 @@ class Navy extends Component {
     
     this.state = {
       ships: createShips(),
+      countOfDroppedShip: 0
     };
     
     this.shipDroppedHandler = this.shipDroppedHandler.bind(this);
@@ -35,6 +36,7 @@ class Navy extends Component {
   shipDroppedHandler(shipState) {
     const {type, id} = shipState;
     const newState = this.state.ships.slice();
+    const counter = this.state.countOfDroppedShip+1;
     
     newState[4-type].map(s => {
       if (s.id === id) {
@@ -45,9 +47,16 @@ class Navy extends Component {
       }
     });
     
+    if (counter === 10) this.props.navyIsReady();
+    
     this.setState({
-      ships: newState
+      ships: newState,
+      countOfDroppedShip: counter
     });
+  }
+  
+  shouldComponentUpdate() {
+    return this.state.countOfDroppedShip !== 10;
   }
   
   chooseShip(shipState) {
