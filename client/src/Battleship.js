@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Battleship.css';
 
+import socket from './webSocketInterfase/ws';
+
 import Header from './header/Header.js';
 import Footer from './footer/Footer.js';
 
@@ -24,13 +26,16 @@ const Application = (props) => {
         <Start changeStatus={props.changeStatus} newStatus={'dispose'}/>
       );
     }
-    default: {
+    case APP_STATUS.dispose: {
       return (
         <Dispose matrix={props.matrix}
                  changeMatrixHandler={props.changeMatrixHandler}
                  normalizeMatrixHandler={props.normalizeMatrixHandler}
         />
       )
+    }
+    default: {
+      return null;
     }
   }
 };
@@ -45,6 +50,16 @@ class Battleship extends Component {
     this.changeStatus = this.changeStatus.bind(this);
     this.changeMatrixHandler = this.changeMatrixHandler.bind(this);
     this.normalizeMatrixHandler = this.normalizeMatrixHandler.bind(this);
+    
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === 'unsuccessfulCreate') {
+        this.changeStatus('dispose');
+      }
+      if (data.type === 'successfulCreate') {
+        this.changeStatus('game');
+      }
+    }
   }
   
   changeMatrixHandler(shipState, action) {
@@ -63,6 +78,8 @@ class Battleship extends Component {
   normalizeMatrixHandler() {
     const changedMatrix = normalizeMatrix(this.state.matrix);
   
+    socket.send(JSON.stringify({type: 'createMatrix', matrix: changedMatrix}));
+    
     this.setState({
       matrix: changedMatrix
     });

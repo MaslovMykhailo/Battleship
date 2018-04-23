@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Table from './Table';
 import Ship from '../ship/Ship';
+import Helper from './Helper';
 
 import {DropTarget} from 'react-dnd';
 
@@ -70,6 +71,10 @@ class Field extends Component {
     this.changeHelperState = this.changeHelperState.bind(this);
   }
   
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return this.state.ships !== nextState.ships;
+  // }
+  
   changeHelperState(newState) {
     const {x, y, w, pos, vis, color} = newState;
     const { side } = this.props;
@@ -107,21 +112,6 @@ class Field extends Component {
   }
   
   render() {
-    // console.log('a');
-    const { width, height, x, y, vis, color } = this.state.helper;
-    
-    const helperStyle = {
-      position: 'absolute',
-      width: width,
-      height: height,
-      opacity: 0.5,
-      zIndex: 1,
-      left: x,
-      top: y,
-      display: vis ? 'block' : 'none',
-      background: color
-    };
-    
     const createShipStyle = (shipState) => {
       return {
         position: 'absolute',
@@ -146,7 +136,7 @@ class Field extends Component {
     
     return this.props.connectDropTarget(
       <div style={{padding: '2% 2% 1%', width: '46%', position: 'relative', float:'left'}}>
-        <div style={helperStyle} />
+        <Helper helper={this.state.helper}/>
         <Table side={this.props.side} matrix={this.props.waiting ? this.props.matrix : undefined}/>
         {!this.props.waiting ? ships : null}
       </div>

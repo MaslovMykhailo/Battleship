@@ -4,7 +4,7 @@ import './table.css';
 class Table extends Component {
   
   shouldComponentUpdate(nextProps) {
-    return !!nextProps.matrix;
+    return this.props.matrix !== nextProps.matrix;
   }
   
   render() {

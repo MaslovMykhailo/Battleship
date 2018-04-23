@@ -10,6 +10,7 @@ header {
 
 .anchor {
     position: absolute;
+    /*margin-top: 0.3%;*/
     right: 0.5%;
-    width: 12%;
+    width: 14%;
 }

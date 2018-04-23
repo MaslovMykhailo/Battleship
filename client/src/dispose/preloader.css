@@ -1,7 +1,8 @@
 .loader {
+    /*overflow: hidden;*/
     height: 120px;
-    left: 80%;
-    position: absolute;
+    left: 79%;
+    position: fixed;
     transform: translateX(-50%) translateY(-50%);
     -o-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);
