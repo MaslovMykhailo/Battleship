@@ -3,11 +3,19 @@
 const createMessage = (type, needData) => {
   const methods = {
     successfulCreate() {
-      const { id } = needData;
-      return JSON.stringify({type: 'successfulCreate', id});
+      const { id, gameStatus } = needData;
+      return JSON.stringify({ type, id, gameStatus });
     },
     unsuccessfulCreate() {
-      return JSON.stringify({type: 'unsuccessfulCreate'});
+      return JSON.stringify({ type });
+    },
+    progressResult() {
+      const { gameStatus, enemyMatrix } = needData;
+      return JSON.stringify({ type, gameStatus, enemyMatrix });
+    },
+    progressChange() {
+      const { gameStatus, matrix } = needData;
+      return JSON.stringify({ type, gameStatus, matrix });
     }
   };
   
