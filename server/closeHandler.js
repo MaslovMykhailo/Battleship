@@ -1,0 +1,37 @@
+'use strict';
+
+const { delClientsFromPairs } = require('./clientPairs');
+const createMessage = require('./createMessage');
+
+const closeHandler = (connection, pairs) => {
+  const { index, enemy } = findConnection(connection, pairs);
+  if (index > -1) {
+    pairs[index][enemy].connection.send(createMessage('victory', {
+      enemyMatrix: pairs[index][enemy].enemyMatrix
+    }));
+  }
+  delClientsFromPairs(index, pairs);
+};
+
+const findConnection = (connection, pairs) => {
+  let index = -1;
+  let enemy;
+  for (let i = 0 ; i < pairs.length ; i++) {
+    if (pairs[i].first.connection === connection) {
+      index = i;
+      enemy = 'second';
+      break;
+    }
+    if (pairs[i].second.connection === connection) {
+      index = i;
+      enemy = 'first';
+      break;
+    }
+  }
+  
+  if (!pairs[index][enemy]) index = -1;
+  
+  return { index, enemy };
+};
+
+module.exports = closeHandler;

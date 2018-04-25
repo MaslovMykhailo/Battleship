@@ -16,6 +16,14 @@ const createMessage = (type, needData) => {
     progressChange() {
       const { gameStatus, matrix } = needData;
       return JSON.stringify({ type, gameStatus, matrix });
+    },
+    victory() {
+      const { enemyMatrix } = needData;
+      return JSON.stringify({ type, enemyMatrix });
+    },
+    defeat() {
+      const { matrix } = needData;
+      return JSON.stringify({ type, matrix });
     }
   };
   

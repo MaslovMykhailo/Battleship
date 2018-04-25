@@ -3,6 +3,7 @@
 const http = require('http');
 const WebSocket = require('websocket').server;
 const messageHandlers = require('./messageHandlers');
+const closeHandler = require('./closeHandler');
 
 const server = http.createServer((req, res) => {
   res.writeHead(200);
@@ -27,6 +28,12 @@ ws.on('request', (req) => {
   connection.on('message', message => {
     const dataName = message.type + 'Data';
     messageHandlers(message[dataName], pairs, connection);
+  
+    connection.on('close', (reasonCode, description) => {
+      closeHandler(connection, pairs);
+      console.log(pairs);
+      // console.pos({ reasonCode, description });
+    });
   });
 });
 // const clients = [];

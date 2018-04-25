@@ -17,7 +17,10 @@ module.exports = {
     }
     return [0, 4, 3, 2, 1].every((s, i) => s === ships[i]);
   },
-  progressHandler(x, y, playerMatrix, enemyMatrix) {
+  progressHandler(x, y, player, enemy) {
+    let { enemyMatrix: playerMatrix } = player;
+    let { matrix: enemyMatrix, countOfShips } = enemy;
+    
     if (!enemyMatrix[y][x]) {
       enemyMatrix[y][x] = 2;
       playerMatrix[y][x] = 2;
@@ -27,6 +30,7 @@ module.exports = {
       playerMatrix[y][x] = 3;
       if (shipIsDestroyed(x, y, enemyMatrix, x, y)) {
         destroyHandler(x, y, playerMatrix, enemyMatrix);
+        if(!--countOfShips) return 'victory';
       }
       return 'hit';
     }

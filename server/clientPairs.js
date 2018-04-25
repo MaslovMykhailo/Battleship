@@ -10,7 +10,8 @@ module.exports = {
         connection,
         matrix,
         id: index + 's',
-        enemyMatrix: createEmptyMatrix()
+        enemyMatrix: createEmptyMatrix(),
+        countOfShips: 10
       };
       return { waiting: false, index};
     } else {
@@ -19,15 +20,16 @@ module.exports = {
           connection,
           matrix,
           id: index + 'f',
-          enemyMatrix: createEmptyMatrix()
+          enemyMatrix: createEmptyMatrix(),
+          countOfShips: 10
         },
         second: null
       };
       return { waiting: true, index};
     }
   },
-  delClientFromPairs(pairs, connection, matrix) {
-  
+  delClientsFromPairs(index, pairs) {
+    pairs.splice(index, 1);
   }
 };
 
