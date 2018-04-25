@@ -1,0 +1,17 @@
+.game-content {
+    flex: 1 0 auto;
+}
+
+.player-table, .enemy-table {
+    position: relative;
+    padding: 2% 2% 1%;
+    width: 46%;
+}
+
+.player-table {
+    float: left;
+}
+
+.enemy-table, .enemy-table > table {
+    float: right;
+}

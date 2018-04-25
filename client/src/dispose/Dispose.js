@@ -67,8 +67,8 @@ class Dispose extends Component {
         <IntoBattleButton side={side}
                          ready={ready}
                          waitingHandler={this.waitingHandler}
-        />
-        : <Preloader side={side}/>;
+        /> :
+        <Preloader side={side}/>;
     }
     return (
       <div className={'dispose'} ref={(node)=>{this.node = node}}>

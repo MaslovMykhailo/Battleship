@@ -8,6 +8,7 @@ import Footer from './footer/Footer.js';
 
 import Start from './start/Start.js';
 import Dispose from './dispose/Dispose.js';
+import Game from './game/Game.js';
 
 import { changeMatrix, normalizeMatrix } from './helpFunctions/changeMatrix';
 
@@ -34,6 +35,11 @@ const Application = (props) => {
         />
       )
     }
+    case APP_STATUS.game: {
+      return (
+        <Game matrix={props.matrix} enemyMatrix={props.enemyMatrix}/>
+      )
+    }
     default: {
       return null;
     }
@@ -45,7 +51,8 @@ class Battleship extends Component {
     super(props);
     this.state = {
       status: APP_STATUS.start,
-      matrix: new Array(10).fill(new Array(10).fill(0))
+      matrix: new Array(10).fill(null).map(v => new Array(10).fill(0)),
+      enemyMatrix: null
     };
     this.changeStatus = this.changeStatus.bind(this);
     this.changeMatrixHandler = this.changeMatrixHandler.bind(this);
@@ -54,9 +61,15 @@ class Battleship extends Component {
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.type === 'unsuccessfulCreate') {
+        this.setState({
+          matrix: new Array(10).fill(null).map(v => new Array(10).fill(0))
+        });
         this.changeStatus('dispose');
       }
       if (data.type === 'successfulCreate') {
+        this.setState({
+          enemyMatrix: new Array(10).fill(null).map(v => new Array(10).fill(0))
+        });
         this.changeStatus('game');
       }
     }
@@ -100,6 +113,7 @@ class Battleship extends Component {
                      changeMatrixHandler={this.changeMatrixHandler}
                      normalizeMatrixHandler={this.normalizeMatrixHandler}
                      matrix={this.state.matrix}
+                     enemyMatrix={this.state.enemyMatrix}
         />
         <Footer />
       </div>
