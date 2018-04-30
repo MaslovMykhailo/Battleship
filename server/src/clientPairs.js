@@ -29,7 +29,7 @@ module.exports = {
     }
   },
   delClientsFromPairs(index, pairs) {
-    pairs.splice(index, 1);
+    pairs[index] = null;
   }
 };
 

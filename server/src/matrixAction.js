@@ -2,34 +2,37 @@
 
 module.exports = {
   validateMatrix(matrix) {
-    const hit = (row, col) => (row < 0 || col < 0 || row > 9 || col > 9) ? 0 : matrix[row][col];
+    const field = [];
+    for (let i = 0 ; i < 10 ; i++) field[i] = matrix[i].slice();
+    const hit = (row, col) => (row < 0 || col < 0 || row > 9 || col > 9) ? 0 : field[row][col];
     let ships = [10, 0, 0, 0, 0];
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
         if (hit(row, col)) {
           if (hit(row - 1, col - 1) || hit(row - 1, col + 1)) return false;
           if (hit(row - 1, col) && hit(row, col - 1)) return false;
-          if ((matrix[row][col] += hit(row - 1, col) + hit(row, col - 1)) > 4) return false;
-          ships[matrix[row][col]]++;
-          ships[matrix[row][col] - 1]--;
+          if ((field[row][col] += hit(row - 1, col) + hit(row, col - 1)) > 4) return false;
+          ships[field[row][col]]++;
+          ships[field[row][col] - 1]--;
         }
       }
     }
     return [0, 4, 3, 2, 1].every((s, i) => s === ships[i]);
   },
   progressHandler(x, y, player, enemy) {
-    let { enemyMatrix: playerMatrix } = player;
-    let { matrix: enemyMatrix, countOfShips } = enemy;
+    let { enemyMatrix } = player;
+    let { matrix, countOfShips } = enemy;
     
-    if (!enemyMatrix[y][x]) {
+    if (!matrix[y][x]) {
+      matrix[y][x] = 2;
       enemyMatrix[y][x] = 2;
-      playerMatrix[y][x] = 2;
       return 'miss';
     } else {
-      enemyMatrix[y][x] = 4;
-      playerMatrix[y][x] = 3;
-      if (shipIsDestroyed(x, y, enemyMatrix, x, y)) {
-        destroyHandler(x, y, playerMatrix, enemyMatrix);
+      matrix[y][x] = 4;
+      enemyMatrix[y][x] = 3;
+      
+      if (shipIsDestroyed(x, y, matrix, x, y)) {
+        destroyHandler(x, y, enemyMatrix, matrix);
         if(!--countOfShips) return 'victory';
       }
       return 'hit';

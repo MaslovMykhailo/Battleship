@@ -2,8 +2,8 @@
 
 const http = require('http');
 const WebSocket = require('websocket').server;
-const messageHandlers = require('./messageHandlers');
-const closeHandler = require('./closeHandler');
+const messageHandlers = require('./src/messageHandlers');
+const closeHandler = require('./src/closeHandler');
 
 const server = http.createServer((req, res) => {
   res.writeHead(200);

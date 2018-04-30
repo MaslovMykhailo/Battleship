@@ -6,11 +6,13 @@ const createMessage = require('./createMessage');
 const closeHandler = (connection, pairs) => {
   const { index, enemy } = findConnection(connection, pairs);
   if (index > -1) {
-    pairs[index][enemy].connection.send(createMessage('victory', {
-      enemyMatrix: pairs[index][enemy].enemyMatrix
-    }));
+    if (pairs[index][enemy]) {
+      pairs[index][enemy].connection.send(createMessage('victory', {
+        enemyMatrix: pairs[index][enemy].enemyMatrix
+      }));
+    }
+    delClientsFromPairs(index, pairs);
   }
-  delClientsFromPairs(index, pairs);
 };
 
 const findConnection = (connection, pairs) => {
@@ -29,7 +31,7 @@ const findConnection = (connection, pairs) => {
     }
   }
   
-  if (!pairs[index][enemy]) index = -1;
+  if (index !== -1 && !pairs[index][enemy]) index = -1;
   
   return { index, enemy };
 };
