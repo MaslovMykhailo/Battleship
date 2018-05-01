@@ -61,8 +61,8 @@ class Dispose extends Component {
       field = <Field matrix={matrix} width={width}
                      x={x} y={y} side={side}
                      changeMatrixHandler={changeMatrixHandler}
-                     waiting={waiting}
-      />;
+                     waiting={waiting}/>;
+      
       intoBattleButton = !waiting ?
         <IntoBattleButton side={side}
                          ready={ready}

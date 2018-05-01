@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Table from '../field/Table';
+import Table from '../table/Table';
 
 import './game.css';
 
@@ -7,8 +7,8 @@ class Game extends Component {
   constructor(props) {
     super(props);
     
+    this.node = null;
     this.state = {
-      node: null,
       side: null
     }
   }
@@ -21,15 +21,24 @@ class Game extends Component {
   
   render() {
     const { side } = this.state;
-    const { matrix, enemyMatrix } = this.props;
-    
-    const playerTable = side ? <Table side={side} matrix={matrix}/> : null;
-    const enemyTable = side ? <Table side={side} matrix={enemyMatrix}/> : null;
+    const { matrix, enemyMatrix, gameStatus, progressHandler } = this.props;
   
+    const playerIsActive = gameStatus === 'playerProgress' ? 1 : 0.5;
+    const enemyIsActive = gameStatus === 'enemyProgress' ? 1 : 0.5;
+    
+    const playerTable = side ?
+      <Table side={side} matrix={matrix} /> :
+      null;
+    
+    const enemyTable = side ?
+      <Table side={side} matrix={enemyMatrix} progressHandler={
+        gameStatus === 'playerProgress' ? progressHandler : null
+      }/> : null;
+    
     return (
       <div className={'game-content'} ref={(node)=>{this.node = node}}>
-        <div className={'player-table'}>{playerTable}</div>
-        <div className={'enemy-table'}>{enemyTable}</div>
+        <div className={'player-table'} style={{opacity: enemyIsActive}}>{playerTable}</div>
+        <div className={'enemy-table'} style={{opacity: playerIsActive}}>{enemyTable}</div>
       </div>
     )
   }

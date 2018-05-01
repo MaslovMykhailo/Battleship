@@ -76,7 +76,7 @@ class Navy extends Component {
     const shipsRender = this.state.ships.map((v, i) => {
       return (
         <div key={i-10}>
-          <div key={i+10}>
+          <div key={i+10} style={{marginBottom: this.props.side/8}}>
           {v.map(s => {
             return this.chooseShip(s);
           })}

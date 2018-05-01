@@ -9,7 +9,7 @@ class Start extends Component {
   }
   
   changeStatusHandler() {
-    this.props.changeStatus(this.props.newStatus);
+    this.props.changeStatus(this.props.nextStatus);
   }
   
   render() {

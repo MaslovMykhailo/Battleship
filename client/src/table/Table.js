@@ -8,13 +8,19 @@ class Table extends Component {
   }
   
   render() {
-    const { side, matrix } = this.props;
+    const { side, matrix, progressHandler } = this.props;
     
     const createTr = (j) => {
       return new Array(11).fill(0).map((td, i) => {
         let className = !i || !j ? 'label' : '';
+        
+        const onClick = i && j && matrix && !matrix[j-1][i-1] && progressHandler ? progressHandler(i-1, j-1) : null;
+        
         return (
-        <td className={className} key={i + '' + j} style={{width: side, height: side}}>
+        <td className={className} key={i + '' + j}
+            style={{width: side, height: side}}
+            onClick={onClick}
+        >
           {getContent(i, j, matrix, side)}
         </td>
       )});
@@ -51,14 +57,14 @@ const getContent = (i, j, matrix, side) => {
         }
         case 2: {
           return <div style={{
-            width: side-10, height: side-10,
-            backgroundColor: 'blue', marginLeft:1
+            width: 5, height: 5,
+            backgroundColor: 'blue', marginLeft:10
           }}/>
         }
         case 3: {
           return <div style={{
-            width: side-10, height: side-10,
-            backgroundColor: 'red', marginLeft:1
+            width: 5, height: 5,
+            backgroundColor: 'red', marginLeft:10
           }}/>
         }
         case 4: {

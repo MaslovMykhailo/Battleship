@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Table from './Table';
+import Table from '../table/Table';
 import Ship from '../ship/Ship';
 import Helper from './Helper';
 
