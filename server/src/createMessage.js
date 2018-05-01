@@ -18,12 +18,12 @@ const createMessage = (type, needData) => {
       return JSON.stringify({ type, gameStatus, matrix });
     },
     victory() {
-      const { enemyMatrix } = needData;
-      return JSON.stringify({ type, enemyMatrix });
+      const { enemyMatrix, gameStatus } = needData;
+      return JSON.stringify({ type, enemyMatrix, gameStatus });
     },
     defeat() {
-      const { matrix } = needData;
-      return JSON.stringify({ type, matrix });
+      const { matrix, gameStatus } = needData;
+      return JSON.stringify({ type, matrix, gameStatus });
     }
   };
   

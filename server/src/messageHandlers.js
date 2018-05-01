@@ -60,14 +60,15 @@ const messageHandlers = (message, pairs, connection) => {
           })
         );
       } else {
-        
         clients[player].connection.send(
           createMessage('victory', {
+            gameStatus: 'victory',
             enemyMatrix: pairs[index][player].enemyMatrix
           })
         );
         clients[enemy].connection.send(
           createMessage('defeat', {
+            gameStatus: 'defeat',
             matrix: pairs[index][enemy].matrix
           })
         );

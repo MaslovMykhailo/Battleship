@@ -21,7 +21,7 @@ module.exports = {
   },
   progressHandler(x, y, player, enemy) {
     let { enemyMatrix } = player;
-    let { matrix, countOfShips } = enemy;
+    let { matrix } = enemy;
     
     if (!matrix[y][x]) {
       matrix[y][x] = 2;
@@ -33,7 +33,7 @@ module.exports = {
       
       if (shipIsDestroyed(x, y, matrix, x, y)) {
         destroyHandler(x, y, enemyMatrix, matrix);
-        if(!--countOfShips) return 'victory';
+        if(!--enemy.countOfShips) return 'victory';
       }
       return 'hit';
     }
