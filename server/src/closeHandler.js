@@ -21,12 +21,12 @@ const findConnection = (connection, pairs) => {
   let enemy;
   for (let i = 0 ; i < pairs.length ; i++) {
     if (pairs[i]) {
-      if (pairs[i].first.connection === connection) {
+      if (pairs[i].first && pairs[i].first.connection === connection) {
         index = i;
         enemy = 'second';
         break;
       }
-      if (pairs[i].second.connection === connection) {
+      if (pairs[i].second && pairs[i].second.connection === connection) {
         index = i;
         enemy = 'first';
         break;

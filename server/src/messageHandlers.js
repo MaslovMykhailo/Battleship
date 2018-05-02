@@ -39,8 +39,24 @@ const messageHandlers = (message, pairs, connection) => {
     progress(data) {
       const { x, y, id } = data;
       const { index, player, enemy } = parseId(id);
-      
       const clients = pairs[index];
+      
+      if (!x && !y && typeof x === 'object') {
+        clients[player].connection.send(
+          createMessage('progressResult', {
+            gameStatus: 'enemyProgress',
+            enemyMatrix: clients[player].enemyMatrix
+          })
+        );
+        clients[enemy].connection.send(
+          createMessage('progressChange', {
+            gameStatus: 'playerProgress',
+            matrix: clients[enemy].matrix
+          })
+        );
+        return;
+      }
+      
       const progressStatus = progressHandler(x, y, clients[player], clients[enemy]);
       
       if (progressStatus !== 'victory') {
