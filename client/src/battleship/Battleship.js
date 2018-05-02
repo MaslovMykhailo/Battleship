@@ -55,12 +55,12 @@ class Battleship extends Component {
           });
         },
         victory() {
-          self.setState({ gameStatus, enemyMatrix});
-          self.changeStatus('endOfGame');
+          self.setState({ gameStatus, enemyMatrix });
+          setTimeout(() => {self.changeStatus('endOfGame')}, 3000);
         },
         defeat() {
-          self.setState({ gameStatus, matrix});
-          self.changeStatus('endOfGame');
+          self.setState({ gameStatus, matrix });
+          setTimeout(() => {self.changeStatus('endOfGame')}, 3000);
         }
       };
       
@@ -113,7 +113,7 @@ class Battleship extends Component {
   }
   
   render() {
-    const { status, matrix, enemyMatrix, gameStatus } = this.state;
+    const { status, matrix, enemyMatrix, gameStatus, id } = this.state;
     
     return (
       <div className={'battleship'}>
@@ -126,6 +126,7 @@ class Battleship extends Component {
                      enemyMatrix={enemyMatrix}
                      gameStatus={gameStatus}
                      curStatus={status}
+                     id={id}
         />
         <Footer />
       </div>

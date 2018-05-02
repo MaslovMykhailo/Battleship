@@ -1,11 +1,11 @@
 const socket = new WebSocket('ws://127.0.0.1:3001');
 
-socket.onopen = () => {
-  console.log('connected');
+socket.onclose = () => {
+  alert('Server is closed!');
 };
 
-socket.onclose = () => {
-  console.log('closed');
+socket.onerror = () => {
+  alert('Error on server!');
 };
 
 export default socket;

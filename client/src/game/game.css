@@ -25,6 +25,12 @@
     top: 40%;
 }
 
+
+.arrow-right {
+    transform: rotate(1turn);
+    transition: transform 1s;
+}
+
 .arrow-left {
     transform: rotate(180deg);
     transition: transform 1s;

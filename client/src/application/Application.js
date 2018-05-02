@@ -17,7 +17,8 @@ const Application = (props) => {
     normalizeMatrixHandler,
     enemyMatrix,
     gameStatus,
-    progressHandler
+    progressHandler,
+    id
   } = props;
   
   switch (curStatus) {
@@ -40,6 +41,7 @@ const Application = (props) => {
               enemyMatrix={enemyMatrix}
               gameStatus= {gameStatus}
               progressHandler={progressHandler}
+              id={id}
         />
       )
     }

@@ -4,14 +4,18 @@ import Table from '../table/Table';
 import './game.css';
 import arrow from './arrow.svg';
 
+import socket from '../WebSocket/ws';
+
 class Game extends Component {
   constructor(props) {
     super(props);
     
     this.node = null;
+    this.timer = null;
     this.state = {
-      side: null
-    }
+      side: null,
+      timer: null
+    };
   }
   
   componentDidMount() {
@@ -20,15 +24,33 @@ class Game extends Component {
     this.setState({ side });
   }
   
+  setTimer() {
+    this.timer = setTimeout(() => {
+        socket.send(JSON.stringify({
+          type: 'progress', x: null, y: null, id: this.props.id
+        }));
+      }, 30000);
+  }
+  
+  clearTimer() {
+    clearTimeout(this.timer);
+  }
+  
   render() {
     const { side } = this.state;
     const { matrix, enemyMatrix, gameStatus, progressHandler } = this.props;
   
+    if (side && gameStatus === 'playerProgress') {
+      this.setTimer();
+    } else {
+      this.clearTimer();
+    }
+    
     const playerIsActive = gameStatus === 'playerProgress' ? 1 : 0.5;
     const enemyIsActive = gameStatus === 'enemyProgress' ? 1 : 0.5;
     
     const playerTable = side ?
-      <Table side={side} matrix={matrix} /> :
+      <Table side={side} matrix={matrix}/> :
       null;
     
     const enemyTable = side ?
