@@ -14,7 +14,8 @@ class Table extends Component {
       return new Array(11).fill(0).map((td, i) => {
         let className = !i || !j ? 'label' : '';
         
-        const onClick = i && j && matrix && !matrix[j-1][i-1] && progressHandler ? progressHandler(i-1, j-1) : null;
+        const onClick = i && j && matrix && !matrix[j-1][i-1] && progressHandler ?
+          progressHandler(i-1, j-1) : null;
         
         return (
         <td className={className} key={i + '' + j}
@@ -50,28 +51,32 @@ const getContent = (i, j, matrix, side) => {
   if (matrix) {
       switch (matrix[j-1][i-1]) {
         case 1: {
-          return <div style={{
-            width: side-2, height: side-2,
-            backgroundColor: 'blue', marginLeft:1
+          return <div className={'type1'} style={{
+            width: side-2, height: side-2
           }}/>
         }
         case 2: {
-          return <div style={{
-            width: 5, height: 5,
-            backgroundColor: 'blue', marginLeft:10
+          return <div className={'type2'} style={{
+            width: Math.floor(side/5), height: Math.floor(side/5) ,
           }}/>
         }
         case 3: {
-          return <div style={{
-            width: 5, height: 5,
-            backgroundColor: 'red', marginLeft:10
-          }}/>
+          const style = { height: Math.floor(side/10) };
+          return (
+          <div className={'type3'}>
+            <div className={'elem-left'} style={style}/>
+            <div className={'elem-right'} style={style}/>
+          </div>)
         }
         case 4: {
-          return <div style={{
-            width: side-2, height: side-2,
-            backgroundColor: 'red', marginLeft:1
-          }}/>
+          const styleLR = { height: Math.floor(side/10) };
+          const styleC = { width: side-2, height: side-2 };
+          return (
+          <div className={'type4'}>
+            <div className={'elem-center'} style={styleC}/>
+            <div className={'elem-left'} style={styleLR}/>
+            <div className={'elem-right'} style={styleLR}/>
+          </div>)
         }
         default: {
           return null;

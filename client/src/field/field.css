@@ -1,0 +1,8 @@
+.field {
+    padding: 2% 2% 1%;
+    width: 46%;
+    position: relative;
+    float: left;
+    opacity: 1;
+    transition: opacity 5s;
+}

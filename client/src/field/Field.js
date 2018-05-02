@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './field.css';
+
 import Table from '../table/Table';
 import Ship from '../ship/Ship';
 import Helper from './Helper';
@@ -69,6 +71,7 @@ class Field extends Component {
     
     this.dropShipHandler = this.dropShipHandler.bind(this);
     this.changeHelperState = this.changeHelperState.bind(this);
+    this.incorrectRotate = this.incorrectRotate.bind(this);
   }
   
   // shouldComponentUpdate(nextProps, nextState) {
@@ -111,37 +114,58 @@ class Field extends Component {
     });
   }
   
-  render() {
-    const createShipStyle = (shipState) => {
-      return {
-        position: 'absolute',
-        left: shipState.resXpx+2,
-        top: shipState.resYpx+2,
-        display: shipState.pos ? 'flex' : 'block'
-      }
-    };
+  incorrectRotate(id) {
+    const ships = this.state.ships;
+    let index = 0;
+    while (ships[index].id !== id) index++;
+    const { resXpx, resYpx, side, type, pos } = ships[index];
     
-    const ships = this.state.ships.map((s, i) => {
+    this.changeHelperState({
+      x: resXpx, y: resYpx, side,
+      w: (side+2)*type, vis: true,
+      pos, color: 'red'
+    });
+
+    setTimeout(() => {
+      this.changeHelperState({x: 0, y: 0, w: 0, pos: 0, vis: false})
+    }, 200);
+  }
+  
+  render() {
+    const { ships, helper } = this.state;
+    const { matrix, changeMatrixHandler, connectDropTarget, side, waiting} = this.props;
+    
+    const shipsOnField = ships.map((s, i) => {
       return (
         <Ship
           key={i}
-          st={createShipStyle(s)}
+          additionalStyle={createShipStyle(s)}
           shipState={s}
-          changeMatrixHandler={this.props.changeMatrixHandler}
-          matrix={this.props.matrix}
+          changeMatrixHandler={changeMatrixHandler}
+          matrix={matrix}
           dropShipHandler={this.dropShipHandler}
+          incorrectRotate={this.incorrectRotate}
         />
       )
     });
     
-    return this.props.connectDropTarget(
-      <div style={{padding: '2% 2% 1%', width: '46%', position: 'relative', float:'left'}}>
-        <Helper helper={this.state.helper}/>
-        <Table side={this.props.side} matrix={this.props.waiting ? this.props.matrix : undefined}/>
-        {!this.props.waiting ? ships : null}
+    return connectDropTarget(
+      <div className={'field'} style={{opacity: waiting ? 0.5 : 1}}>
+        <Helper helper={helper}/>
+        <Table side={side} matrix={ waiting ? matrix : undefined }/>
+        { !waiting ? shipsOnField : null }
       </div>
     )
   }
 }
+
+const createShipStyle = (shipState) => {
+  return {
+    position: 'absolute',
+    left: shipState.resXpx+2,
+    top: shipState.resYpx+2,
+    display: shipState.pos ? 'flex' : 'block'
+  }
+};
 
 export default DropTarget('SHIP', fieldTarget, collect)(Field);

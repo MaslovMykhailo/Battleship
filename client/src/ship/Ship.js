@@ -60,7 +60,7 @@ class Ship extends Component{
   
   rotateHandler() {
     if (this.props.shipState.isDropped) {
-      const {shipState, matrix, dropShipHandler} = this.props;
+      const {shipState, matrix, dropShipHandler, incorrectRotate} = this.props;
       
       const virtualMatrix = [];
       for (let i = 0 ; i < 10 ; i++) {
@@ -81,6 +81,8 @@ class Ship extends Component{
         changeMatrix(shipState, matrix, 'del');
         dropShipHandler(Object.assign(shipState, {pos: newPos}));
         this.forceUpdate();
+      } else {
+        incorrectRotate(shipState.id);
       }
     }
   }
@@ -91,10 +93,11 @@ class Ship extends Component{
       marginBottom: 1,
     };
     
-    const {type, pos, side} = this.props.shipState;
+    const { shipState, additionalStyle, connectDragSource } = this.props;
+    const { type, pos, side } = shipState;
     
-    return this.props.connectDragSource(
-      <div style={Object.assign(style, this.props.st)} onClick={this.rotateHandler}>
+    return connectDragSource(
+      <div style={Object.assign(style, additionalStyle)} onClick={this.rotateHandler}>
         {new Array(type).fill(null).map((v, i) =>
           <Deck key={i} pos={pos} side={side}/>
         )}

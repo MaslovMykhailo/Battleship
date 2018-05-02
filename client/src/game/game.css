@@ -6,6 +6,7 @@
     position: relative;
     padding: 2% 2% 1%;
     width: 46%;
+    transition: opacity .7s;
 }
 
 .player-table {

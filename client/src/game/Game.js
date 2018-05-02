@@ -31,14 +31,19 @@ class Game extends Component {
       null;
     
     const enemyTable = side ?
-      <Table side={side} matrix={enemyMatrix} progressHandler={
-        gameStatus === 'playerProgress' ? progressHandler : null
-      }/> : null;
+      <Table side={side} matrix={enemyMatrix}
+             progressHandler={gameStatus === 'playerProgress' ? progressHandler : null}
+      /> : null;
     
     return (
       <div className={'game-content'} ref={(node)=>{this.node = node}}>
         <div className={'player-table'} style={{opacity: enemyIsActive}}>{playerTable}</div>
-        <div className={'enemy-table'} style={{opacity: playerIsActive}}>{enemyTable}</div>
+        <div className={'enemy-table'}
+             style={{
+               opacity: playerIsActive,
+               cursor: gameStatus === 'playerProgress' ? 'pointer' : 'default'
+             }}
+        >{enemyTable}</div>
       </div>
     )
   }

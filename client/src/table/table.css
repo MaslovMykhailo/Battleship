@@ -1,7 +1,6 @@
 table {
     border-spacing: 0;
     border: 1px solid black;
-
 }
 
 td {
@@ -15,3 +14,47 @@ td {
     font-family: Roboto;
     cursor: default;
 }
+
+.type1 {
+    margin: auto;
+    background: blue;
+}
+
+.type2 {
+    margin: auto;
+    background: blue;
+    border-radius: 100%;
+}
+
+.type3 {
+    width: 100%;
+}
+
+.elem-left, .elem-right {
+    z-index: 1000;
+    margin: auto;
+    background: red;
+    border-radius: 100%;
+}
+
+.elem-left {
+    transform: rotate(45deg);
+}
+
+.elem-right {
+    transform: rotate(135deg);
+}
+
+.type4 {
+    /*position: absolute;*/
+}
+
+.elem-center {
+    margin-top: -2.8%;
+    margin-left: 1px;
+    position: absolute;
+    background: blue;
+}
+
+
+

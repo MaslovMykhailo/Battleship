@@ -70,9 +70,16 @@ class Dispose extends Component {
         /> :
         <Preloader side={side}/>;
     }
+    
+    const description = waiting ? 'Enemy search' :
+      'Drag to the field and click on ship to rotate';
+    
     return (
       <div className={'dispose'} ref={(node)=>{this.node = node}}>
         {field} {navy} {intoBattleButton}
+        <span className={'description-' + (waiting ? 'search' : 'dispose')}>
+          {description}
+        </span>
         {/*<ShipDragLayer />*/}
       </div>
     )
