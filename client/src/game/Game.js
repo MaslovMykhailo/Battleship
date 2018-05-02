@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Table from '../table/Table';
 
 import './game.css';
+import arrow from './arrow.svg';
 
 class Game extends Component {
   constructor(props) {
@@ -35,9 +36,12 @@ class Game extends Component {
              progressHandler={gameStatus === 'playerProgress' ? progressHandler : null}
       /> : null;
     
+    const arrowName = gameStatus === 'playerProgress' ? 'arrow-right' : 'arrow-left';
+    
     return (
       <div className={'game-content'} ref={(node)=>{this.node = node}}>
         <div className={'player-table'} style={{opacity: enemyIsActive}}>{playerTable}</div>
+        <img className={arrowName} src={arrow} alt={'arrow'}/>
         <div className={'enemy-table'}
              style={{
                opacity: playerIsActive,
@@ -45,6 +49,7 @@ class Game extends Component {
              }}
         >{enemyTable}</div>
       </div>
+      
     )
   }
 }

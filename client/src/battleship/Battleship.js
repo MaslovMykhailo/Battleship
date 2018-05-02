@@ -106,7 +106,6 @@ class Battleship extends Component {
   
   progressHandler(x, y) {
     return () => {
-      console.log('send', x, y);
       socket.send(JSON.stringify({
         type: 'progress', x, y, id: this.state.id
       }));

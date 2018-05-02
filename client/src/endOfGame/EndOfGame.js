@@ -15,17 +15,16 @@ class EndOfGame extends Component {
   }
   
   render() {
-    const { gameStatus, description } = this.props;
+    const { gameStatus } = this.props;
     const button = gameStatus + '-button';
     const caption = gameStatus.toUpperCase();
     
     return (
       <div className={gameStatus}>
-        <span>{caption}</span>
+        <span className={'caption'}>{caption}</span>
         <button className={button} type={'button'} onClick={this.changeStatusHandler}>
           <span>Start game again!</span>
         </button>
-        <span>{description}</span>
       </div>
     )
   }

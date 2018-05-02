@@ -65,17 +65,17 @@ const destroyHandler = (x, y, playerM, enemyM) => {
   
   const changeOnX1 = (x, y, playerM, enemyM) => {
     playerM[y][x] = 4;
-    if (y - 1 > -1) {
+    if (y-1 > -1) {
       playerM[y-1][x] = enemyM[y-1][x] = enemyM[y-1][x] === 4 ? 4 : 2;
     }
-    if (y + 1 < 10) {
+    if (y+1 < 10) {
       playerM[y+1][x] = enemyM[y+1][x] = enemyM[y+1][x] === 4 ? 4 : 2;
     }
   };
   
   const changeOnX2 = (x, y, playerM, enemyM) => {
     for (let j = -1; j < 2; j++) {
-      if (y + j > -1 && y + j < 10) playerM[y+j][x] = enemyM[y+j][x] = 2;
+      if (y+j > -1 && y+j < 10) playerM[y+j][x] = enemyM[y+j][x] = 2;
     }
   };
   
@@ -127,7 +127,7 @@ const destroyHandler = (x, y, playerM, enemyM) => {
 
     i = 1;
     while (y+i < 10 && enemyM[y+i][x] === 4) {
-      changeOnY1(x, y+1, playerM, enemyM);
+      changeOnY1(x, y+i, playerM, enemyM);
       i++;
     }
     if (y+i < 10) {

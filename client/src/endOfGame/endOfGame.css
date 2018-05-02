@@ -12,7 +12,8 @@
 
 .victory-button, .defeat-button {
     position: absolute;
-    left: 64%;
+    left: 32%;
+    top: 55%;
 
     display: block;
     margin: 5% auto;
@@ -40,5 +41,17 @@
     display: block;
     font-size: 4.2vw;
     font-family: Roboto;
+}
+
+.caption {
+    position: absolute;
+    display: block;
+    left: 22%;
+    top: 15%;
+    font-size: 15vw;
+    font-family: Roboto;
+    font-style: oblique;
+    color: #1a237e;
+    cursor: default;
 }
 

@@ -16,3 +16,16 @@
 .enemy-table, .enemy-table > table {
     float: right;
 }
+
+.arrow-right, .arrow-left {
+    position: absolute;
+    display: block;
+    width: 10%;
+    left: 45%;
+    top: 40%;
+}
+
+.arrow-left {
+    transform: rotate(180deg);
+    transition: transform 1s;
+}
