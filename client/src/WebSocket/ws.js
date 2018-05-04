@@ -1,11 +1,7 @@
-const socket = new WebSocket('ws://127.0.0.1:3001');
+const socket = new WebSocket('ws://127.0.0.1:8080');
 
 socket.onclose = () => {
-  alert('Server is closed!');
-};
-
-socket.onerror = () => {
-  alert('Error on server!');
+  setTimeout(() => { alert('Server is not available!\nPlease try later :(') }, 1000);
 };
 
 export default socket;

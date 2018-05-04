@@ -24,6 +24,10 @@ class Game extends Component {
     this.setState({ side });
   }
   
+  componentWillUnmount() {
+    this.clearTimer();
+  }
+  
   setTimer() {
     this.timer = setTimeout(() => {
         socket.send(JSON.stringify({
