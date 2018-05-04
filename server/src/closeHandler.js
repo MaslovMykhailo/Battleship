@@ -34,7 +34,7 @@ const findConnection = (connection, pairs) => {
     }
   }
   
-  if (index !== -1 && !pairs[index][enemy]) index = -1;
+  if (index !== -1 && !pairs[index][enemy]) enemy = undefined;
   
   return { index, enemy };
 };

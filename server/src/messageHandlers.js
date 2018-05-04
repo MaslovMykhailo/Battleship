@@ -41,6 +41,8 @@ const messageHandlers = (message, pairs, connection) => {
       const { index, player, enemy } = parseId(id);
       const clients = pairs[index];
       
+      if (!clients) return;
+      
       if (!x && !y && typeof x === 'object') {
         clients[player].connection.send(
           createMessage('progressResult', {
