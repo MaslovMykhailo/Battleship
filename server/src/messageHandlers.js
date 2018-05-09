@@ -96,7 +96,7 @@ const messageHandlers = (message, pairs, connection) => {
     }
   };
   
-  handlers[data.type](data);
+  if (handlers[data.type]) handlers[data.type](data);
 };
 
 module.exports = messageHandlers;

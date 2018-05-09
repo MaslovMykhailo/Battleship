@@ -45,6 +45,7 @@ class Game extends Component {
     const { matrix, enemyMatrix, gameStatus, progressHandler } = this.props;
   
     if (side && gameStatus === 'playerProgress') {
+      this.clearTimer();
       this.setTimer();
     } else {
       this.clearTimer();
