@@ -3,6 +3,7 @@
 const { delClientsFromPairs } = require('./clientPairs');
 const createMessage = require('./createMessage');
 
+
 const closeHandler = (connection, pairs) => {
   const { index, enemy } = findConnection(connection, pairs);
   if (index > -1) {

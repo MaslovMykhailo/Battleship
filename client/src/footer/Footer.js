@@ -4,6 +4,7 @@ import './footer.css';
 
 import github from './github.svg';
 
+
 const Footer = () => {
   return (
     <footer>

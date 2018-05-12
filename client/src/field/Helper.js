@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Helper = (props) => {
   const { width, height, x, y, vis, color } = props.helper;
   

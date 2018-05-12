@@ -56,11 +56,11 @@ class Battleship extends Component {
         },
         victory() {
           self.setState({ gameStatus, enemyMatrix });
-          setTimeout(() => {self.changeStatus('endOfGame')}, 1500);
+          setTimeout(() => {self.changeStatus('endOfGame')}, 2000);
         },
         defeat() {
           self.setState({ gameStatus, matrix });
-          setTimeout(() => {self.changeStatus('endOfGame')}, 1500);
+          setTimeout(() => {self.changeStatus('endOfGame')}, 2000);
         }
       };
       

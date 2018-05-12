@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import './start.css';
 
+
 class Start extends Component {
   constructor(props) {
     super(props);

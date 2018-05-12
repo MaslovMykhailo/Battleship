@@ -11,6 +11,7 @@ import {DropTarget} from 'react-dnd';
 import { getCoord, getCoordInPx, getCurrentDeck } from '../helpFunctions/findCoordFunc';
 import { canMoveShip, canMoveHelper } from '../helpFunctions/canMove';
 
+
 const fieldTarget = {
   drop(props, monitor, component) {
     component.changeHelperState({x: 0, y: 0, w: 0, pos: 0, vis: false});
@@ -73,10 +74,6 @@ class Field extends Component {
     this.changeHelperState = this.changeHelperState.bind(this);
     this.incorrectRotate = this.incorrectRotate.bind(this);
   }
-  
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return this.state.ships !== nextState.ships;
-  // }
   
   changeHelperState(newState) {
     const {x, y, w, pos, vis, color} = newState;

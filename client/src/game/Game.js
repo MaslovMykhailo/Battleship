@@ -6,6 +6,7 @@ import arrow from './arrow.svg';
 
 import socket from '../WebSocket/ws';
 
+
 class Game extends Component {
   constructor(props) {
     super(props);

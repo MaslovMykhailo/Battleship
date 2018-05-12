@@ -3,12 +3,12 @@ import './dispose.css';
 
 import Field from '../field/Field.js';
 import Navy from '../navy/Navy.js';
-// import ShipDragLayer from '../ship/ShipDragLayer';
 import IntoBattleButton from './IntoBattleButton';
 import Preloader from './Preloader';
 
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+
 
 class Dispose extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class Dispose extends Component {
   render() {
     let navy = null, field = null, intoBattleButton = null;
     const { side, x, y, width, ready, waiting } = this.state;
-    const { matrix, changeMatrixHandler} = this.props;
+    const { matrix, changeMatrixHandler } = this.props;
     
     if (side) {
       navy = <Navy side={side} navyIsReady={this.navyIsReady}/>;
@@ -71,7 +71,8 @@ class Dispose extends Component {
         <Preloader side={side}/>;
     }
     
-    const description = waiting ? 'Enemy search' :
+    const description = waiting ?
+      'Enemy search' :
       'Drag to the field and click on ship to rotate';
     
     return (

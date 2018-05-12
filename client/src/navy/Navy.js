@@ -3,30 +3,13 @@ import './navy.css';
 import Ship from '../ship/Ship.js';
 import DroppedShip from '../ship/DroppedShip.js';
 
+
 class Navy extends Component {
   constructor(props) {
     super(props);
-  
-    const createShips = () => {
-      const ships = [];
-      for (let i = 4 ; i > 0 ; i--) {
-        ships.push(new Array(5-i).fill(null).map((v, k) => {
-          return {
-            x: null,
-            y: null,
-            pos: true,
-            id: k+''+(5-i),
-            type: i,
-            side: this.props.side,
-            isDropped: false
-          }
-        }));
-      }
-      return ships;
-    };
     
     this.state = {
-      ships: createShips(),
+      ships: createShips(this.props.side),
       countOfDroppedShip: 0
     };
     
@@ -89,5 +72,23 @@ class Navy extends Component {
     return <div className={'navy'}>{shipsRender}</div>;
   }
 }
+
+const createShips = (side) => {
+  const ships = [];
+  for (let i = 4 ; i > 0 ; i--) {
+    ships.push(new Array(5-i).fill(null).map((v, k) => {
+      return {
+        x: null,
+        y: null,
+        pos: true,
+        side,
+        id: k+''+(5-i),
+        type: i,
+        isDropped: false
+      }
+    }));
+  }
+  return ships;
+};
 
 export default Navy;

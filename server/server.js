@@ -9,6 +9,7 @@ const closeHandler = require('./src/closeHandler');
 
 require('events').EventEmitter.prototype._maxListeners = 100;
 
+
 const wsPort = 8080;
 const staticPort = 3001;
 

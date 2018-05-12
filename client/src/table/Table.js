@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './table.css';
 
+
 class Table extends Component {
   
   shouldComponentUpdate(nextProps) {

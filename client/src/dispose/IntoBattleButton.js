@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import './intoBattleButton.css';
 
+
 class IntoBattleButton extends Component {
   constructor(props) {
     super(props);
-    
     this.enemySearchHandler = this.enemySearchHandler.bind(this);
   }
   

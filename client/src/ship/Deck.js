@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Deck = (props) => {
   let d1 = props.side > 45 ? 4 : 2;
   let d2 = props.side > 45 ? 6 : 4;

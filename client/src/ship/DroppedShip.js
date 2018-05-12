@@ -2,6 +2,7 @@ import React from 'react';
 
 import Deck from './Deck';
 
+
 const DroppedShip = (props) => {
   const {type, pos, side} = props.shipState;
   

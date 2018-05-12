@@ -3,6 +3,7 @@ import React from 'react';
 import './header.css';
 import anchor from './anchor.png';
 
+
 const Header = () => {
   return (
     <header>
