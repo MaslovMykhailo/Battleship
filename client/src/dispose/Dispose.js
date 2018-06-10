@@ -28,7 +28,7 @@ class Dispose extends Component {
   }
   
   componentDidMount() {
-    let side = Math.floor(this.node.offsetWidth*0.035);
+    let side = Math.floor(this.node.offsetWidth*0.03);
     side = side % 2 ? side + 1 : side;
     this.setState({
       x: this.node.getBoundingClientRect().left + this.node.offsetWidth*0.02 + side + 2,
