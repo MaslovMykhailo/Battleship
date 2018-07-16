@@ -71,7 +71,7 @@ const getContent = (i, j, matrix, side) => {
         }
         case 4: {
           const styleLR = { height: Math.floor(side/10) };
-          const styleC = { width: side-2, height: side-2 };
+          const styleC = { width: side-2, height: side-2, marginTop: -(Math.floor(side/3)+2) };
           return (
           <div className={'type4'}>
             <div className={'elem-center'} style={styleC}/>
