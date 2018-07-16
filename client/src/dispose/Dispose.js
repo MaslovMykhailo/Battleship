@@ -7,6 +7,8 @@ import IntoBattleButton from './IntoBattleButton';
 import Preloader from './Preloader';
 
 import HTML5Backend from 'react-dnd-html5-backend';
+import TouchBackend from 'react-dnd-touch-backend';
+import MultiBackend, { TouchTransition } from 'react-dnd-multi-backend';
 import { DragDropContext } from 'react-dnd';
 
 
@@ -81,10 +83,22 @@ class Dispose extends Component {
         <span className={'description-' + (waiting ? 'search' : 'dispose')}>
           {description}
         </span>
-        {/*<ShipDragLayer />*/}
       </div>
     )
   }
 }
 
-export default DragDropContext(HTML5Backend)(Dispose);
+const HTML5toTouch = {
+  backends: [
+    {
+      backend: HTML5Backend
+    },
+    {
+      backend: TouchBackend({enableMouseEvents: true}), // Note that you can call your backends with options
+      preview: false,
+      transition: TouchTransition
+    }
+  ]
+};
+
+export default DragDropContext(MultiBackend(HTML5toTouch))(Dispose);
