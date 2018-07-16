@@ -6,6 +6,7 @@ import socket from '../WebSocket/ws';
 import Header from '../header/Header.js';
 import Footer from '../footer/Footer.js';
 import Application from '../application/Application';
+import RotatePrompt from '../rotatePrompt/RotatePrompt';
 
 import APP_STATUS from '../constants/APP_STATUS';
 
@@ -117,6 +118,7 @@ class Battleship extends Component {
     return (
       <div className={'battleship'}>
         <Header />
+        <RotatePrompt />
         <Application progressHandler={this.progressHandler}
                      changeStatus={this.changeStatus}
                      changeMatrixHandler={this.changeMatrixHandler}
